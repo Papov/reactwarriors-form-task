@@ -9,6 +9,7 @@ export class Form extends React.Component {
     const { step, errors, value, onChangeInput } = this.props;
     const { firstname, lastname, password, repeatPassword } = value;
     const { email, phone, country, sity } = value;
+    const { avatar } = value;
     return (
       <form>
         {step === "basic" && (
@@ -33,7 +34,11 @@ export class Form extends React.Component {
           />
         )}
         {step === "avatar" && (
-          <Avatar errors={errors} value={value} onChangeInput={onChangeInput} />
+          <Avatar
+            errors={errors}
+            avatar={avatar}
+            onChangeInput={onChangeInput}
+          />
         )}
         {step === "final" && (
           <Final errors={errors} value={value} onChangeInput={onChangeInput} />

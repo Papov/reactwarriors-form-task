@@ -2,21 +2,15 @@ import React from "react";
 import { Header } from "./header/Header";
 import { Form } from "./form/Form";
 import { Footer } from "./footer/Footer";
+import {
+  required,
+  equal,
+  moreThreeLetter,
+  validEmail,
+  validPhone
+} from "../components/hoc/Validator";
 
 export class App extends React.Component {
-  static defaultProps = {
-    messages: {
-      firstname: "write your name, must be more 5 letters",
-      lastname: "write your surname, must be more 5 letters",
-      password: "write your password",
-      repeatPassword: "passwords must be equal",
-      email: "invalid mail",
-      phone: "invalid phone",
-      country: "required",
-      sity: "required"
-    }
-  };
-
   state = {
     activeStep: 0,
     steps: ["basic", "contact", "avatar", "final"],
@@ -28,7 +22,8 @@ export class App extends React.Component {
       email: "",
       phone: "",
       country: "",
-      sity: ""
+      sity: "",
+      avatar: ""
     },
     errors: {}
   };
@@ -36,22 +31,27 @@ export class App extends React.Component {
   validate = event => {
     event.preventDefault();
     const { value } = this.state;
-    const { messages } = this.props;
-
-    const errors = {};
-
-    if (value.firstname.length < 5) {
-      errors.firstname = messages.firstname;
+    let errors = {};
+    // first step
+    const { firstname, password, lastname, repeatPassword } = value;
+    if (this.state.activeStep >= 0) {
+      errors = {
+        ...moreThreeLetter({ firstname, lastname }),
+        ...required({ password }),
+        ...equal({ password, repeatPassword })
+      };
     }
-    if (value.lastname.length < 5) {
-      errors.lastname = messages.lastname;
+    // second step
+    const { email, phone, country, sity } = value;
+    if (this.state.activeStep >= 1) {
+      errors = {
+        ...errors,
+        ...validEmail({ email }),
+        ...validPhone({ phone }),
+        ...required({ country, sity })
+      };
     }
-    if (!value.password.length) {
-      errors.password = messages.password;
-    }
-    if (value.password !== value.repeatPassword) {
-      errors.repeatPassword = messages.repeatPassword;
-    }
+    // third step
 
     if (Object.keys(errors).length) {
       this.setState(prevProps => ({
@@ -89,7 +89,7 @@ export class App extends React.Component {
     const { steps, errors, value, activeStep } = this.state;
     const step = steps[activeStep];
     return (
-      <div className="card card--middle position-fixed p-2 card--width">
+      <div className="card card--middle position-fixed p-3 card--width">
         <Header steps={steps} activeStep={activeStep} />
         <Form
           onChangeInput={this.onChangeInput}

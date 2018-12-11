@@ -11,7 +11,7 @@ export class Header extends React.Component {
             {0 !== index && (
               <span
                 className={classNames("step--line", {
-                  active: activeStep === index
+                  active: activeStep >= index
                 })}
               />
             )}

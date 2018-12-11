@@ -1,9 +1,30 @@
 import React from "react";
 import { UIInput } from "../ui/UIInput";
+import { UISelect } from "../ui/UISelect";
 
 export class Contacts extends React.Component {
+  static defaultProps = {
+    countryList: ["Ukraine", "Germany", "France", "Spain", "USA"],
+    cityList: {
+      Ukraine: ["Kyiv", "Lviv", "Odessa", "Dnipro", "Kharkiv"],
+      Germany: ["Berlin", "Dortmund", "Drezden", "Humburg", "Koln"],
+      France: ["Paris", "Lyon", "Toulouse", "Marseille", "Bordeaux"],
+      Spain: ["Madrid", "Barcelona", "Sevilla", "Bilbo", "Malaga"],
+      USA: ["Washington", "San-Francisco", "New-York", "Las-Vegas", "Miami"]
+    }
+  };
+
   render() {
-    const { email, phone, country, sity, onChangeInput, errors } = this.props;
+    const {
+      email,
+      phone,
+      country,
+      sity,
+      onChangeInput,
+      errors,
+      cityList,
+      countryList
+    } = this.props;
     return (
       <React.Fragment>
         <UIInput
@@ -22,21 +43,21 @@ export class Contacts extends React.Component {
           onChange={onChangeInput("phone")}
           error={errors.phone}
         />
-        <UIInput
-          type="country"
+        <UISelect
           label="Country"
           id="country"
           value={country}
           onChange={onChangeInput("country")}
           error={errors.country}
+          child={countryList}
         />
-        <UIInput
-          type="sity"
+        <UISelect
           label="Sity"
           id="sity"
           value={sity}
           onChange={onChangeInput("sity")}
           error={errors.sity}
+          child={cityList[country]}
         />
       </React.Fragment>
     );
