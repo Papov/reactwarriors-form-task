@@ -92,16 +92,16 @@ export class App extends React.Component {
   onChangeAvatar = event => {
     let reader = new FileReader();
     reader.onloadend = event => {
-      this.setState({
+      this.setState(prevState => ({
         value: {
-          ...this.state.value,
+          ...prevState.value,
           avatar: event.target.result
         },
         errors: {
-          ...this.state.errors,
+          ...prevState.errors,
           avatar: ""
         }
-      });
+      }));
     };
     reader.readAsDataURL(event.target.files[0]);
   };
@@ -109,13 +109,12 @@ export class App extends React.Component {
   render() {
     //console.log("app");
     const { steps, errors, value, activeStep, avatar } = this.state;
-    const step = steps[activeStep];
     return (
       <div className="card card--middle position-fixed p-3 card--width">
         <Header steps={steps} activeStep={activeStep} />
         <Form
           onChangeInput={this.onChangeInput}
-          step={step}
+          step={steps[activeStep]}
           value={value}
           errors={errors}
           onChangeAvatar={this.onChangeAvatar}
