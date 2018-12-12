@@ -1,8 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-export class Final extends React.Component {
+export class Final extends React.PureComponent {
+  static propTypes = {
+    value: PropTypes.object.isRequired
+  };
+
   render() {
-    console.log("final");
+    // console.log("final");
     const { value } = this.props;
     return (
       <div className="mt-4 mb-4">
@@ -29,8 +34,8 @@ export class Final extends React.Component {
             <span>{value.phone}</span>
           </div>
           <div className="user-info d-flex flex-column align-items-center justify-content-center text-monospace">
-            <span className="text-muted">Sity:</span>
-            <span>{value.sity}</span>
+            <span className="text-muted">City:</span>
+            <span>{value.city}</span>
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ export class UISelect extends React.PureComponent {
             invalid: error
           })}
           id={id}
+          name={id}
           value={value}
           onChange={onChange}
         >

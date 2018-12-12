@@ -1,7 +1,13 @@
 import React from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
 
 export class Header extends React.PureComponent {
+  static propTypes = {
+    activeStep: PropTypes.number.isRequired,
+    steps: PropTypes.array.isRequired
+  };
+
   render() {
     //console.log("header");
     const { steps, activeStep } = this.props;

@@ -1,7 +1,17 @@
 import React from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
 
 export class UIInput extends React.PureComponent {
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired
+  };
+
   render() {
     const { id, label, value, onChange, error, type } = this.props;
     return (
@@ -13,6 +23,7 @@ export class UIInput extends React.PureComponent {
           className={classNames("form-control", { invalid: error })}
           type={type}
           id={id}
+          name={id}
           value={value}
           onChange={onChange}
         />

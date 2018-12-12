@@ -1,7 +1,17 @@
 import React from "react";
 import { UIInput } from "../ui/UIInput";
+import PropTypes from "prop-types";
 
 export class Basic extends React.PureComponent {
+  static propTypes = {
+    onChangeInput: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    password: PropTypes.string,
+    repeatPassword: PropTypes.string
+  };
+
   render() {
     //console.log("basic");
     const {
@@ -19,7 +29,7 @@ export class Basic extends React.PureComponent {
           label="Name"
           id="firstname"
           value={firstname}
-          onChange={onChangeInput("firstname")}
+          onChange={onChangeInput}
           error={errors.firstname}
         />
         <UIInput
@@ -27,7 +37,7 @@ export class Basic extends React.PureComponent {
           label="Surname"
           id="lastname"
           value={lastname}
-          onChange={onChangeInput("lastname")}
+          onChange={onChangeInput}
           error={errors.lastname}
         />
         <UIInput
@@ -35,7 +45,7 @@ export class Basic extends React.PureComponent {
           label="Password"
           id="password"
           value={password}
-          onChange={onChangeInput("password")}
+          onChange={onChangeInput}
           error={errors.password}
         />
         <UIInput
@@ -43,7 +53,7 @@ export class Basic extends React.PureComponent {
           label="Repeat password"
           id="repeatPassword"
           value={repeatPassword}
-          onChange={onChangeInput("repeatPassword")}
+          onChange={onChangeInput}
           error={errors.repeatPassword}
         />
       </React.Fragment>

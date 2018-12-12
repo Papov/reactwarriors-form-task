@@ -1,7 +1,14 @@
 import React from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
 
 export class Avatar extends React.PureComponent {
+  static propTypes = {
+    errors: PropTypes.object.isRequired,
+    avatar: PropTypes.string,
+    onChangeAvatar: PropTypes.func.isRequired
+  };
+
   render() {
     //console.log("avatar");
     const { errors, avatar, onChangeAvatar } = this.props;

@@ -8,7 +8,7 @@ import {
   moreThreeLetter,
   validEmail,
   validPhone
-} from "../components/hoc/Validator";
+} from "../components/utils/Validator";
 
 export class App extends React.Component {
   state = {
@@ -22,7 +22,7 @@ export class App extends React.Component {
       email: "",
       phone: "",
       country: "",
-      sity: "",
+      city: "",
       avatar: ""
     },
     errors: {}
@@ -42,12 +42,12 @@ export class App extends React.Component {
       };
     }
     // second step
-    const { email, phone, country, sity } = value;
+    const { email, phone, country, city } = value;
     if (this.state.activeStep === 1) {
       errors = {
         ...validEmail({ email }),
         ...validPhone({ phone }),
-        ...required({ country, sity })
+        ...required({ country, city })
       };
     }
     // third step
@@ -58,25 +58,24 @@ export class App extends React.Component {
       };
     }
     if (Object.keys(errors).length) {
-      this.setState(prevProps => ({
+      this.setState({
         errors: {
-          ...prevProps.errors,
           ...errors
         }
-      }));
+      });
     } else {
-      this.changeActiveStep(1)();
+      this.changeActiveStep(1);
     }
   };
 
-  changeActiveStep = value => () => {
+  changeActiveStep = step => {
     this.setState({
-      activeStep: this.state.activeStep + value
+      activeStep: this.state.activeStep + (step === 1 || -1)
     });
   };
 
-  onChangeInput = name => event => {
-    const { value } = event.target;
+  onChangeInput = event => {
+    const { value, name } = event.target;
     this.setState(prevState => ({
       value: {
         ...prevState.value,

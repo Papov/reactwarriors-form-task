@@ -3,8 +3,17 @@ import { Basic } from "./Basic";
 import { Contacts } from "./Contacts";
 import { Avatar } from "./Avatar";
 import { Final } from "./Final";
+import PropTypes from "prop-types";
 
 export class Form extends React.Component {
+  static propTypes = {
+    onChangeInput: PropTypes.func.isRequired,
+    onChangeAvatar: PropTypes.func.isRequired,
+    step: PropTypes.string.isRequired,
+    errors: PropTypes.string.isRequired,
+    value: PropTypes.object.isRequired
+  };
+
   render() {
     //console.log("form");
     const { step, errors, value, onChangeInput, onChangeAvatar } = this.props;
@@ -28,7 +37,7 @@ export class Form extends React.Component {
             email={value.email}
             phone={value.phone}
             country={value.country}
-            sity={value.sity}
+            city={value.city}
           />
         )}
         {step === "avatar" && (

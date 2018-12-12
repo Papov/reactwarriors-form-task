@@ -6,7 +6,7 @@ const messages = {
   email: "invalid mail",
   phone: "invalid phone, need 0991112233",
   country: "required",
-  sity: "required",
+  city: "required",
   avatar: "required"
 };
 // default arguments, return message if argument do not valid mail (^.+@[^.].*.[a-z]{2,}$)
