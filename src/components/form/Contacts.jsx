@@ -2,7 +2,7 @@ import React from "react";
 import { UIInput } from "../ui/UIInput";
 import { UISelect } from "../ui/UISelect";
 
-export class Contacts extends React.Component {
+export class Contacts extends React.PureComponent {
   static defaultProps = {
     countryList: ["Ukraine", "Germany", "France", "Spain", "USA"],
     cityList: {
@@ -13,8 +13,8 @@ export class Contacts extends React.Component {
       USA: ["Washington", "San-Francisco", "New-York", "Las-Vegas", "Miami"]
     }
   };
-
   render() {
+    //console.log("contacts");
     const {
       email,
       phone,

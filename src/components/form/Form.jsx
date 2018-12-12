@@ -6,20 +6,18 @@ import { Final } from "./Final";
 
 export class Form extends React.Component {
   render() {
-    const { step, errors, value, onChangeInput } = this.props;
-    const { firstname, lastname, password, repeatPassword } = value;
-    const { email, phone, country, sity } = value;
-    const { avatar } = value;
+    //console.log("form");
+    const { step, errors, value, onChangeInput, onChangeAvatar } = this.props;
     return (
       <form>
         {step === "basic" && (
           <Basic
             errors={errors}
             value={value}
-            firstname={firstname}
-            lastname={lastname}
-            password={password}
-            repeatPassword={repeatPassword}
+            firstname={value.firstname}
+            lastname={value.lastname}
+            password={value.password}
+            repeatPassword={value.repeatPassword}
             onChangeInput={onChangeInput}
           />
         )}
@@ -27,22 +25,20 @@ export class Form extends React.Component {
           <Contacts
             errors={errors}
             onChangeInput={onChangeInput}
-            email={email}
-            phone={phone}
-            country={country}
-            sity={sity}
+            email={value.email}
+            phone={value.phone}
+            country={value.country}
+            sity={value.sity}
           />
         )}
         {step === "avatar" && (
           <Avatar
             errors={errors}
-            avatar={avatar}
-            onChangeInput={onChangeInput}
+            avatar={value.avatar}
+            onChangeAvatar={onChangeAvatar}
           />
         )}
-        {step === "final" && (
-          <Final errors={errors} value={value} onChangeInput={onChangeInput} />
-        )}
+        {step === "final" && <Final value={value} />}
       </form>
     );
   }

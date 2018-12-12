@@ -22,8 +22,8 @@ export class UISelect extends React.PureComponent {
           onChange={onChange}
         >
           {["", ...child].map(item => (
-            <option key={`sity${item}`} value={item}>
-              {item}
+            <option key={`${label}${item}`} value={item}>
+              {item || "No checked"}
             </option>
           ))}
         </select>

@@ -34,7 +34,7 @@ export class App extends React.Component {
     let errors = {};
     // first step
     const { firstname, password, lastname, repeatPassword } = value;
-    if (this.state.activeStep >= 0) {
+    if (this.state.activeStep === 0) {
       errors = {
         ...moreThreeLetter({ firstname, lastname }),
         ...required({ password }),
@@ -43,16 +43,20 @@ export class App extends React.Component {
     }
     // second step
     const { email, phone, country, sity } = value;
-    if (this.state.activeStep >= 1) {
+    if (this.state.activeStep === 1) {
       errors = {
-        ...errors,
         ...validEmail({ email }),
         ...validPhone({ phone }),
         ...required({ country, sity })
       };
     }
     // third step
-
+    const { avatar } = value;
+    if (this.state.activeStep === 2) {
+      errors = {
+        ...required({ avatar })
+      };
+    }
     if (Object.keys(errors).length) {
       this.setState(prevProps => ({
         errors: {
@@ -85,8 +89,26 @@ export class App extends React.Component {
     }));
   };
 
+  onChangeAvatar = event => {
+    let reader = new FileReader();
+    reader.onloadend = event => {
+      this.setState({
+        value: {
+          ...this.state.value,
+          avatar: event.target.result
+        },
+        errors: {
+          ...this.state.errors,
+          avatar: ""
+        }
+      });
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
   render() {
-    const { steps, errors, value, activeStep } = this.state;
+    //console.log("app");
+    const { steps, errors, value, activeStep, avatar } = this.state;
     const step = steps[activeStep];
     return (
       <div className="card card--middle position-fixed p-3 card--width">
@@ -96,6 +118,8 @@ export class App extends React.Component {
           step={step}
           value={value}
           errors={errors}
+          onChangeAvatar={this.onChangeAvatar}
+          avatar={avatar}
         />
         <Footer
           length={steps.length}

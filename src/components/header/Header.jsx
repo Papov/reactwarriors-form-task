@@ -1,8 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 
-export class Header extends React.Component {
+export class Header extends React.PureComponent {
   render() {
+    //console.log("header");
     const { steps, activeStep } = this.props;
     return (
       <div className="d-flex justify-content-around align-items-center">

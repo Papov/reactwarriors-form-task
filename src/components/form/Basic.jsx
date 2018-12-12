@@ -1,8 +1,9 @@
 import React from "react";
 import { UIInput } from "../ui/UIInput";
 
-export class Basic extends React.Component {
+export class Basic extends React.PureComponent {
   render() {
+    //console.log("basic");
     const {
       onChangeInput,
       errors,

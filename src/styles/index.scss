@@ -48,3 +48,21 @@ body {
 .invalid {
   border-color: red;
 }
+
+.photo-preview {
+  height: 250px;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.user-info {
+  font-size: 12px;
+  padding: 5px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  &:last-of-type {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+}

@@ -6,9 +6,10 @@ const messages = {
   email: "invalid mail",
   phone: "invalid phone, need 0991112233",
   country: "required",
-  sity: "required"
+  sity: "required",
+  avatar: "required"
 };
-
+// default arguments, return message if argument do not valid mail (^.+@[^.].*.[a-z]{2,}$)
 export function validEmail(args) {
   let errors = {};
   let regex = new RegExp("^.+@[^.].*.[a-z]{2,}$");
@@ -20,7 +21,7 @@ export function validEmail(args) {
   });
   return errors;
 }
-
+// default arguments, return message if argument do not number(9 or more letters)
 export function validPhone(args) {
   let errors = {};
   let regex = new RegExp("^[0-9]{9,}$");
@@ -32,7 +33,7 @@ export function validPhone(args) {
   });
   return errors;
 }
-
+// default arguments, return message if argument less  3 letter
 export function moreThreeLetter(args) {
   let errors = {};
   Object.keys(args).map(key => {
@@ -43,7 +44,7 @@ export function moreThreeLetter(args) {
   });
   return errors;
 }
-
+// default arguments, return message more 0 letter
 export function required(args) {
   let errors = {};
   Object.keys(args).map(key => {
@@ -54,7 +55,7 @@ export function required(args) {
   });
   return errors;
 }
-
+// need 2 arguments, compare them end return 2nd arguments message
 export function equal(args) {
   let errors = {};
   Object.keys(args).reduce((first, second) => {
