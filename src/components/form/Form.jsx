@@ -10,7 +10,7 @@ export class Form extends React.Component {
     onChangeInput: PropTypes.func.isRequired,
     onChangeAvatar: PropTypes.func.isRequired,
     step: PropTypes.string.isRequired,
-    errors: PropTypes.string.isRequired,
+    errors: PropTypes.object.isRequired,
     value: PropTypes.object.isRequired
   };
 

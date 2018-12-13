@@ -2,6 +2,8 @@ import React from "react";
 import { UIInput } from "../ui/UIInput";
 import { UISelect } from "../ui/UISelect";
 import PropTypes from "prop-types";
+import countries from "../../data/countries";
+import cities from "../../data/cities";
 
 export class Contacts extends React.PureComponent {
   static propTypes = {
@@ -13,29 +15,25 @@ export class Contacts extends React.PureComponent {
     city: PropTypes.string
   };
 
-  static defaultProps = {
-    countryList: ["Ukraine", "Germany", "France", "Spain", "USA"],
-    cityList: {
-      Ukraine: ["Kyiv", "Lviv", "Odessa", "Dnipro", "Kharkiv"],
-      Germany: ["Berlin", "Dortmund", "Drezden", "Humburg", "Koln"],
-      France: ["Paris", "Lyon", "Toulouse", "Marseille", "Bordeaux"],
-      Spain: ["Madrid", "Barcelona", "Sevilla", "Bilbo", "Malaga"],
-      USA: ["Washington", "San-Francisco", "New-York", "Las-Vegas", "Miami"]
-    }
+  getCities = id => {
+    return Object.entries(cities).reduce((accam, item) => {
+      if (item[1].country === Number(id)) {
+        accam.push({ value: item[0], name: item[1].name });
+      }
+      return accam;
+    }, []);
+  };
+
+  getCountries = () => {
+    let country = countries.map(item => ({ value: item.id, name: item.name }));
+    return country;
   };
 
   render() {
     //console.log("contacts");
-    const {
-      email,
-      phone,
-      country,
-      city,
-      onChangeInput,
-      errors,
-      cityList,
-      countryList
-    } = this.props;
+    const { email, phone, country, city, onChangeInput, errors } = this.props;
+    const cityData = this.getCities(country);
+    const countryData = this.getCountries();
     return (
       <React.Fragment>
         <UIInput
@@ -60,7 +58,7 @@ export class Contacts extends React.PureComponent {
           value={country}
           onChange={onChangeInput}
           error={errors.country}
-          child={countryList}
+          child={countryData}
         />
         <UISelect
           label="City"
@@ -68,7 +66,7 @@ export class Contacts extends React.PureComponent {
           value={city}
           onChange={onChangeInput}
           error={errors.city}
-          child={cityList[country]}
+          child={cityData}
         />
       </React.Fragment>
     );
