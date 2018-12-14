@@ -34,17 +34,17 @@ export function validPhone(args) {
   return errors;
 }
 // default arguments, return message if argument less  3 letter
-export function moreThreeLetter(args) {
+export function moreNLetter(args, n) {
   let errors = {};
   Object.keys(args).map(key => {
-    if (args[key].length < 3) {
+    if (args[key].length < n) {
       errors[key] = messages[key];
     }
     return false;
   });
   return errors;
 }
-// default arguments, return message more 0 letter
+// default arguments, return message empty
 export function required(args) {
   let errors = {};
   Object.keys(args).map(key => {

@@ -5,10 +5,10 @@ import { Footer } from "./footer/Footer";
 import {
   required,
   equal,
-  moreThreeLetter,
+  moreNLetter,
   validEmail,
   validPhone
-} from "../components/utils/Validator";
+} from "../components/utils/validator";
 
 export class App extends React.Component {
   state = {
@@ -36,7 +36,7 @@ export class App extends React.Component {
     const { firstname, password, lastname, repeatPassword } = value;
     if (this.state.activeStep === 0) {
       errors = {
-        ...moreThreeLetter({ firstname, lastname }),
+        ...moreNLetter({ firstname, lastname }, 3),
         ...required({ password }),
         ...equal({ password, repeatPassword })
       };
@@ -91,16 +91,12 @@ export class App extends React.Component {
   onChangeAvatar = event => {
     let reader = new FileReader();
     reader.onloadend = event => {
-      this.setState(prevState => ({
-        value: {
-          ...prevState.value,
-          avatar: event.target.result
-        },
-        errors: {
-          ...prevState.errors,
-          avatar: ""
+      this.onChangeInput({
+        target: {
+          name: "avatar",
+          value: event.target.result
         }
-      }));
+      });
     };
     reader.readAsDataURL(event.target.files[0]);
   };
