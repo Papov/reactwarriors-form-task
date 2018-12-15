@@ -11,22 +11,22 @@ export class Form extends React.Component {
     onChangeAvatar: PropTypes.func.isRequired,
     step: PropTypes.string.isRequired,
     errors: PropTypes.object.isRequired,
-    value: PropTypes.object.isRequired
+    values: PropTypes.object.isRequired
   };
 
   render() {
     //console.log("form");
-    const { step, errors, value, onChangeInput, onChangeAvatar } = this.props;
+    const { step, errors, values, onChangeInput, onChangeAvatar } = this.props;
     return (
       <form>
         {step === "basic" && (
           <Basic
             errors={errors}
-            value={value}
-            firstname={value.firstname}
-            lastname={value.lastname}
-            password={value.password}
-            repeatPassword={value.repeatPassword}
+            values={values}
+            firstname={values.firstname}
+            lastname={values.lastname}
+            password={values.password}
+            repeatPassword={values.repeatPassword}
             onChangeInput={onChangeInput}
           />
         )}
@@ -34,20 +34,20 @@ export class Form extends React.Component {
           <Contacts
             errors={errors}
             onChangeInput={onChangeInput}
-            email={value.email}
-            phone={value.phone}
-            country={value.country}
-            city={value.city}
+            email={values.email}
+            phone={values.phone}
+            country={values.country}
+            city={values.city}
           />
         )}
         {step === "avatar" && (
           <Avatar
             errors={errors}
-            avatar={value.avatar}
+            avatar={values.avatar}
             onChangeAvatar={onChangeAvatar}
           />
         )}
-        {step === "final" && <Final value={value} />}
+        {step === "final" && <Final values={values} />}
       </form>
     );
   }

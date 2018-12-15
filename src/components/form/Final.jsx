@@ -5,14 +5,14 @@ import countries from "../../data/countries";
 
 export class Final extends React.PureComponent {
   static propTypes = {
-    value: PropTypes.object.isRequired
+    values: PropTypes.object.isRequired
   };
 
   render() {
     // console.log("final");
-    const { value } = this.props;
-    const city = cities[value.city].name;
-    const country = countries.find(item => item.id === Number(value.country))
+    const { values } = this.props;
+    const city = cities[values.city].name;
+    const country = countries.find(item => item.id === Number(values.country))
       .name;
     return (
       <div className="mt-4 mb-4">
@@ -21,22 +21,22 @@ export class Final extends React.PureComponent {
             className="rounded-circle"
             width="100"
             height="100"
-            src={value.avatar}
+            src={values.avatar}
             alt="avatar"
           />
         </div>
         <div className="d-flex align-items-center justify-content-center">
-          <h3 className="m-0">{value.firstname} </h3>
-          <h3 className="mb-0 ml-2">{value.lastname}</h3>
+          <h3 className="m-0">{values.firstname} </h3>
+          <h3 className="mb-0 ml-2">{values.lastname}</h3>
         </div>
         <div className="mt-2 mb-4">
           <div className="user-info d-flex flex-column align-items-center justify-content-center text-monospace">
             <span className="text-muted">Mail</span>
-            <span>{value.email}</span>
+            <span>{values.email}</span>
           </div>
           <div className="user-info d-flex flex-column align-items-center justify-content-center text-monospace">
             <span className="text-muted">Phone</span>
-            <span>{value.phone}</span>
+            <span>{values.phone}</span>
           </div>
           <div className="user-info d-flex flex-column align-items-center justify-content-center text-monospace">
             <span className="text-muted">Location</span>

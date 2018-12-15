@@ -10,11 +10,14 @@ import {
   validPhone
 } from "../components/utils/validator";
 
-export class App extends React.Component {
+const hoc = Component => Component;
+
+@hoc
+class App extends React.Component {
   state = {
     activeStep: 0,
     steps: ["basic", "contact", "avatar", "final"],
-    value: {
+    values: {
       firstname: "",
       lastname: "",
       password: "",
@@ -30,10 +33,10 @@ export class App extends React.Component {
 
   validate = event => {
     event.preventDefault();
-    const { value } = this.state;
+    const { values } = this.state;
     let errors = {};
     // first step
-    const { firstname, password, lastname, repeatPassword } = value;
+    const { firstname, password, lastname, repeatPassword } = values;
     if (this.state.activeStep === 0) {
       errors = {
         ...moreNLetter({ firstname, lastname }, 3),
@@ -42,7 +45,7 @@ export class App extends React.Component {
       };
     }
     // second step
-    const { email, phone, country, city } = value;
+    const { email, phone, country, city } = values;
     if (this.state.activeStep === 1) {
       errors = {
         ...validEmail({ email }),
@@ -51,7 +54,7 @@ export class App extends React.Component {
       };
     }
     // third step
-    const { avatar } = value;
+    const { avatar } = values;
     if (this.state.activeStep === 2) {
       errors = {
         ...required({ avatar })
@@ -77,8 +80,8 @@ export class App extends React.Component {
   onChangeInput = event => {
     const { value, name } = event.target;
     this.setState(prevState => ({
-      value: {
-        ...prevState.value,
+      values: {
+        ...prevState.values,
         [name]: value
       },
       errors: {
@@ -103,14 +106,14 @@ export class App extends React.Component {
 
   render() {
     //console.log("app");
-    const { steps, errors, value, activeStep, avatar } = this.state;
+    const { steps, errors, values, activeStep, avatar } = this.state;
     return (
       <div className="card card--middle position-fixed p-3 card--width">
         <Header steps={steps} activeStep={activeStep} />
         <Form
           onChangeInput={this.onChangeInput}
           step={steps[activeStep]}
-          value={value}
+          values={values}
           errors={errors}
           onChangeAvatar={this.onChangeAvatar}
           avatar={avatar}
@@ -125,3 +128,5 @@ export class App extends React.Component {
     );
   }
 }
+
+export { App };

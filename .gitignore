@@ -11,6 +11,11 @@
 # production
 /build
 
+# eject
+/scripts
+/config
+_.eslintrc.json
+
 # misc
 .DS_Store
 .env.local
