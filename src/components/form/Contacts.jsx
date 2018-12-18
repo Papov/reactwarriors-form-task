@@ -1,30 +1,39 @@
 import React from "react";
 import { UIInput } from "../ui/UIInput";
 import { UISelect } from "../ui/UISelect";
+import PropTypes from "prop-types";
+import countries from "../../data/countries";
+import cities from "../../data/cities";
 
-export class Contacts extends React.Component {
-  static defaultProps = {
-    countryList: ["Ukraine", "Germany", "France", "Spain", "USA"],
-    cityList: {
-      Ukraine: ["Kyiv", "Lviv", "Odessa", "Dnipro", "Kharkiv"],
-      Germany: ["Berlin", "Dortmund", "Drezden", "Humburg", "Koln"],
-      France: ["Paris", "Lyon", "Toulouse", "Marseille", "Bordeaux"],
-      Spain: ["Madrid", "Barcelona", "Sevilla", "Bilbo", "Malaga"],
-      USA: ["Washington", "San-Francisco", "New-York", "Las-Vegas", "Miami"]
-    }
+export class Contacts extends React.PureComponent {
+  static propTypes = {
+    onChangeInput: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    email: PropTypes.string,
+    phone: PropTypes.string,
+    country: PropTypes.string,
+    city: PropTypes.string
+  };
+
+  getCities = id => {
+    return Object.entries(cities).reduce((accam, item) => {
+      if (item[1].country === Number(id)) {
+        accam.push({ value: item[0], name: item[1].name });
+      }
+      return accam;
+    }, []);
+  };
+
+  getCountries = () => {
+    let country = countries.map(item => ({ value: item.id, name: item.name }));
+    return country;
   };
 
   render() {
-    const {
-      email,
-      phone,
-      country,
-      sity,
-      onChangeInput,
-      errors,
-      cityList,
-      countryList
-    } = this.props;
+    //console.log("contacts");
+    const { email, phone, country, city, onChangeInput, errors } = this.props;
+    const cityData = this.getCities(country);
+    const countryData = this.getCountries();
     return (
       <React.Fragment>
         <UIInput
@@ -32,7 +41,7 @@ export class Contacts extends React.Component {
           label="Email"
           id="email"
           value={email}
-          onChange={onChangeInput("email")}
+          onChange={onChangeInput}
           error={errors.email}
         />
         <UIInput
@@ -40,24 +49,24 @@ export class Contacts extends React.Component {
           label="Phone"
           id="phone"
           value={phone}
-          onChange={onChangeInput("phone")}
+          onChange={onChangeInput}
           error={errors.phone}
         />
         <UISelect
           label="Country"
           id="country"
           value={country}
-          onChange={onChangeInput("country")}
+          onChange={onChangeInput}
           error={errors.country}
-          child={countryList}
+          child={countryData}
         />
         <UISelect
-          label="Sity"
-          id="sity"
-          value={sity}
-          onChange={onChangeInput("sity")}
-          error={errors.sity}
-          child={cityList[country]}
+          label="City"
+          id="city"
+          value={city}
+          onChange={onChangeInput}
+          error={errors.city}
+          child={cityData}
         />
       </React.Fragment>
     );

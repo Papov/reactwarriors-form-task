@@ -1,7 +1,16 @@
 import React from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
 
 export class UISelect extends React.PureComponent {
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    child: PropTypes.array.isRequired
+  };
+
   static defaultProps = {
     child: []
   };
@@ -18,12 +27,14 @@ export class UISelect extends React.PureComponent {
             invalid: error
           })}
           id={id}
+          name={id}
           value={value}
           onChange={onChange}
         >
-          {["", ...child].map(item => (
-            <option key={`sity${item}`} value={item}>
-              {item}
+          <option value="">No checked</option>
+          {child.map(item => (
+            <option key={`${label}${item.value}`} value={item.value}>
+              {item.name}
             </option>
           ))}
         </select>

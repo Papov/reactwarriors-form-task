@@ -3,23 +3,30 @@ import { Basic } from "./Basic";
 import { Contacts } from "./Contacts";
 import { Avatar } from "./Avatar";
 import { Final } from "./Final";
+import PropTypes from "prop-types";
 
 export class Form extends React.Component {
+  static propTypes = {
+    onChangeInput: PropTypes.func.isRequired,
+    onChangeAvatar: PropTypes.func.isRequired,
+    step: PropTypes.string.isRequired,
+    errors: PropTypes.object.isRequired,
+    values: PropTypes.object.isRequired
+  };
+
   render() {
-    const { step, errors, value, onChangeInput } = this.props;
-    const { firstname, lastname, password, repeatPassword } = value;
-    const { email, phone, country, sity } = value;
-    const { avatar } = value;
+    //console.log("form");
+    const { step, errors, values, onChangeInput, onChangeAvatar } = this.props;
     return (
       <form>
         {step === "basic" && (
           <Basic
             errors={errors}
-            value={value}
-            firstname={firstname}
-            lastname={lastname}
-            password={password}
-            repeatPassword={repeatPassword}
+            values={values}
+            firstname={values.firstname}
+            lastname={values.lastname}
+            password={values.password}
+            repeatPassword={values.repeatPassword}
             onChangeInput={onChangeInput}
           />
         )}
@@ -27,22 +34,20 @@ export class Form extends React.Component {
           <Contacts
             errors={errors}
             onChangeInput={onChangeInput}
-            email={email}
-            phone={phone}
-            country={country}
-            sity={sity}
+            email={values.email}
+            phone={values.phone}
+            country={values.country}
+            city={values.city}
           />
         )}
         {step === "avatar" && (
           <Avatar
             errors={errors}
-            avatar={avatar}
-            onChangeInput={onChangeInput}
+            avatar={values.avatar}
+            onChangeAvatar={onChangeAvatar}
           />
         )}
-        {step === "final" && (
-          <Final errors={errors} value={value} onChangeInput={onChangeInput} />
-        )}
+        {step === "final" && <Final values={values} />}
       </form>
     );
   }
