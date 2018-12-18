@@ -10,9 +10,6 @@ import {
   validPhone
 } from "../components/utils/validator";
 
-const hoc = Component => Component;
-
-@hoc
 class App extends React.Component {
   state = {
     activeStep: 0,
