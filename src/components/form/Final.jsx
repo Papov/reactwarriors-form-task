@@ -2,12 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import cities from "../../data/cities";
 import countries from "../../data/countries";
+import { observer, inject } from "mobx-react";
 
-export class Final extends React.PureComponent {
+@inject(({ store }) => ({
+  values: store.values
+}))
+@observer
+class Final extends React.Component {
   static propTypes = {
     values: PropTypes.object.isRequired
   };
-
   render() {
     // console.log("final");
     const { values } = this.props;
@@ -47,3 +51,5 @@ export class Final extends React.PureComponent {
     );
   }
 }
+
+export { Final };

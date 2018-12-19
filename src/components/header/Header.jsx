@@ -1,8 +1,14 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { observer, inject } from "mobx-react";
 
-export class Header extends React.PureComponent {
+@inject(({ store }) => ({
+  activeStep: store.activeStep,
+  steps: store.steps
+}))
+@observer
+class Header extends React.Component {
   static propTypes = {
     activeStep: PropTypes.number.isRequired,
     steps: PropTypes.array.isRequired
@@ -36,3 +42,5 @@ export class Header extends React.PureComponent {
     );
   }
 }
+
+export { Header };
