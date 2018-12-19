@@ -1,34 +1,30 @@
 import React from "react";
 import { UIInput } from "../ui/UIInput";
 import PropTypes from "prop-types";
+import { observer, inject } from "mobx-react";
 
-export class Basic extends React.PureComponent {
+@inject(({ store }) => ({
+  onChangeInput: store.onChangeInput,
+  errors: store.errors,
+  values: store.values
+}))
+@observer
+class Basic extends React.Component {
   static propTypes = {
     onChangeInput: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired,
-    firstname: PropTypes.string,
-    lastname: PropTypes.string,
-    password: PropTypes.string,
-    repeatPassword: PropTypes.string
+    errors: PropTypes.object.isRequired
   };
 
   render() {
     //console.log("basic");
-    const {
-      onChangeInput,
-      errors,
-      firstname,
-      lastname,
-      password,
-      repeatPassword
-    } = this.props;
+    const { onChangeInput, errors, values } = this.props;
     return (
       <React.Fragment>
         <UIInput
           type="text"
           label="Name"
           id="firstname"
-          value={firstname}
+          value={values.firstname}
           onChange={onChangeInput}
           error={errors.firstname}
         />
@@ -36,7 +32,7 @@ export class Basic extends React.PureComponent {
           type="text"
           label="Surname"
           id="lastname"
-          value={lastname}
+          value={values.lastname}
           onChange={onChangeInput}
           error={errors.lastname}
         />
@@ -44,7 +40,7 @@ export class Basic extends React.PureComponent {
           type="password"
           label="Password"
           id="password"
-          value={password}
+          value={values.password}
           onChange={onChangeInput}
           error={errors.password}
         />
@@ -52,7 +48,7 @@ export class Basic extends React.PureComponent {
           type="password"
           label="Repeat password"
           id="repeatPassword"
-          value={repeatPassword}
+          value={values.repeatPassword}
           onChange={onChangeInput}
           error={errors.repeatPassword}
         />
@@ -60,3 +56,5 @@ export class Basic extends React.PureComponent {
     );
   }
 }
+
+export { Basic };

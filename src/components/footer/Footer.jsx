@@ -1,12 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { inject, observer } from "mobx-react";
 
-export class Footer extends React.PureComponent {
+@inject(({ store }) => ({
+  changeActiveStep: store.changeActiveStep,
+  activeStep: store.activeStep,
+  stepsLength: store.stepsLength,
+  validate: store.validate
+}))
+@observer
+class Footer extends React.Component {
   static propTypes = {
     changeActiveStep: PropTypes.func.isRequired,
     activeStep: PropTypes.number.isRequired,
     validate: PropTypes.func.isRequired,
-    length: PropTypes.number.isRequired
+    stepsLength: PropTypes.number.isRequired
   };
 
   onHandleSubmit = event => {
@@ -15,7 +23,7 @@ export class Footer extends React.PureComponent {
 
   render() {
     // console.log("footer");
-    const { validate, activeStep, changeActiveStep, length } = this.props;
+    const { validate, activeStep, changeActiveStep, stepsLength } = this.props;
     return (
       <div className="btn-group btn-group-sm mt-2" role="group">
         <button
@@ -26,7 +34,7 @@ export class Footer extends React.PureComponent {
         >
           back
         </button>
-        {length - 1 === activeStep ? (
+        {stepsLength - 1 === activeStep ? (
           <button
             type="button"
             onClick={this.onHandleSubmit}
@@ -47,3 +55,5 @@ export class Footer extends React.PureComponent {
     );
   }
 }
+
+export { Footer };

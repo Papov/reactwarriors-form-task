@@ -2,10 +2,17 @@ import React from "react";
 import { UIInput } from "../ui/UIInput";
 import { UISelect } from "../ui/UISelect";
 import PropTypes from "prop-types";
-import countries from "../../data/countries";
-import cities from "../../data/cities";
+import { inject, observer } from "mobx-react";
 
-export class Contacts extends React.PureComponent {
+@inject(({ store }) => ({
+  onChangeInput: store.onChangeInput,
+  errors: store.errors,
+  values: store.values,
+  getCountries: store.getCountries,
+  getCities: store.getCities
+}))
+@observer
+class Contacts extends React.Component {
   static propTypes = {
     onChangeInput: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
@@ -15,32 +22,22 @@ export class Contacts extends React.PureComponent {
     city: PropTypes.string
   };
 
-  getCities = id => {
-    return Object.entries(cities).reduce((accam, item) => {
-      if (item[1].country === Number(id)) {
-        accam.push({ value: item[0], name: item[1].name });
-      }
-      return accam;
-    }, []);
-  };
-
-  getCountries = () => {
-    let country = countries.map(item => ({ value: item.id, name: item.name }));
-    return country;
-  };
-
   render() {
     //console.log("contacts");
-    const { email, phone, country, city, onChangeInput, errors } = this.props;
-    const cityData = this.getCities(country);
-    const countryData = this.getCountries();
+    const {
+      onChangeInput,
+      errors,
+      values,
+      getCountries,
+      getCities
+    } = this.props;
     return (
       <React.Fragment>
         <UIInput
           type="email"
           label="Email"
           id="email"
-          value={email}
+          value={values.email}
           onChange={onChangeInput}
           error={errors.email}
         />
@@ -48,27 +45,29 @@ export class Contacts extends React.PureComponent {
           type="phone"
           label="Phone"
           id="phone"
-          value={phone}
+          value={values.phone}
           onChange={onChangeInput}
           error={errors.phone}
         />
         <UISelect
           label="Country"
           id="country"
-          value={country}
+          value={values.country}
           onChange={onChangeInput}
           error={errors.country}
-          child={countryData}
+          child={getCountries}
         />
         <UISelect
           label="City"
           id="city"
-          value={city}
+          value={values.city}
           onChange={onChangeInput}
           error={errors.city}
-          child={cityData}
+          child={getCities}
         />
       </React.Fragment>
     );
   }
 }
+
+export { Contacts };

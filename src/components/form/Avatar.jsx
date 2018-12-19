@@ -1,17 +1,23 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { observer, inject } from "mobx-react";
 
-export class Avatar extends React.PureComponent {
+@inject(({ store }) => ({
+  onChangeAvatar: store.onChangeAvatar,
+  avatar: store.values.avatar,
+  error: store.errors.avatar
+}))
+@observer
+class Avatar extends React.Component {
   static propTypes = {
-    errors: PropTypes.object.isRequired,
     avatar: PropTypes.string,
     onChangeAvatar: PropTypes.func.isRequired
   };
 
   render() {
     //console.log("avatar");
-    const { errors, avatar, onChangeAvatar } = this.props;
+    const { error, avatar, onChangeAvatar } = this.props;
     return (
       <React.Fragment>
         <div className="photo-preview mt-3">
@@ -29,17 +35,17 @@ export class Avatar extends React.PureComponent {
           />
           <label
             className={classNames("custom-file-label", {
-              invalid: errors.avatar
+              invalid: error
             })}
             htmlFor="file"
           >
             Choose avatar
           </label>
         </div>
-        {errors.avatar && (
-          <span className="invalid-feedback m-0">{errors.avatar}</span>
-        )}
+        {error && <span className="invalid-feedback m-0">{error}</span>}
       </React.Fragment>
     );
   }
 }
+
+export { Avatar };
